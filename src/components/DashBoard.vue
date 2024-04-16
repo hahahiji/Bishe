@@ -51,12 +51,12 @@
             </div>
           </div>
           <div class="map">
-            <div class="bg uwu"></div>
+            <!-- <div class="bg uwu"></div>
             <div class="bg"></div>
-            <MapView />
+            <MapView /> -->
           </div>
         </div>
-        <div class="timebar"></div>
+        <div class="timebar"><timeline/></div>
       </div>
       <div class="colunm">
         <div class="panel">
@@ -84,6 +84,7 @@ import LeftBottomSlot from './slots/LeftBottomSolt.vue';
 import RightBottomSlot from './slots/RightBottomSolt.vue';
 import RightTopSlot from './slots/RightTopSolt.vue';
 import speilefttop from './views/spei/lefttop.vue';
+import timeline from './timeline/timeline.vue';
 // import banner from './banner/timeBanner.vue';
 import { nextTick, ref } from 'vue';
 import { useRouter ,useRoute} from 'vue-router';

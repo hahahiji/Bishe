@@ -13,6 +13,7 @@
     "echarts": "^5.5.0",
     "element-plus": "^2.6.3",
     "esri-loader": "^3.7.0",
+    "gsap": "^3.12.5",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
