@@ -12,6 +12,5 @@ onMounted(() => {
 <style scoped>
 #rightbottom {
     height: 100%;
-    background-color: aquamarine
 }
 </style>

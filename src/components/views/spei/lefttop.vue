@@ -1,13 +1,13 @@
 <template>
-    <div id="leftbottom">
+    <div id="lefttop">
+
     </div>
 </template>
-
 <script setup lang="ts">
 import * as echarts from 'echarts';
 import { onMounted } from 'vue';
 onMounted(() => {
-    var myChart = echarts.init(document.getElementById('leftbottom'));
+    var myChart = echarts.init(document.getElementById('lefttop'));
     myChart.setOption({
         xAxis: {
             type: 'category',
@@ -21,20 +21,14 @@ onMounted(() => {
                 show: false // 去除X轴网格线
             },
             type: 'value',
-            axisLabel: {
-                formatter: '{value}°C'
-            }
+            min: -0.1,
+            max: 0,
+            inverse: true
         },
         series: [
             {
-                data: [6.3725801855153456, 5.928487796232002, 6.471992673916291, 6.3035076927354304, 6.701291100615488, 6.539489346247815, 6.455262581714679, 6.734784909240666, 7.203687456340641, 7.011297738575584, 6.305822550992392, 7.189130166574569, 7.308991916285244],
-                name: '折线图数据',// 可选，为折线图系列添加名称，方便在tooltip中区分
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    color: "#8ec6ad"
-                },
-                symbol: "circle",
+                data: [-0.057947624, -0.046702016, -0.0690655, -0.056718096, -0.06018256, -0.033153873, -0.05978229, -0.06837557, -0.056482412, -0.04761937, -0.029055256, -0.018770296, -0.016992686],
+                type: 'bar'
             }
         ],
         tooltip: {
@@ -45,7 +39,7 @@ onMounted(() => {
             formatter: '{b}: {c}',
         },
         title: {
-            text: '温度的值',
+            text: 'spei每年的数值',
             left: 'center',
             textStyle: {
                 color: '#fff', // 标题颜色
@@ -58,10 +52,15 @@ onMounted(() => {
     })
 })
 </script>
-
 <style scoped>
-#leftbottom {
-    height: 100%;
+#lefttop {
+    --color: #0c1727;
+    background: var(--color);
+    color: var(--color);
+    display: flex;
     width: 100%;
+    height: 100%;
+    overflow: visible;
+    border-radius: .7rem;
 }
 </style>

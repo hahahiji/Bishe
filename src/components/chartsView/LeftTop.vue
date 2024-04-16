@@ -21,21 +21,31 @@ onMounted(() => {
                 show: false // 去除X轴网格线
             },
             type: 'value',
+            min: -0.1,
+            max: 0,
+            inverse: true
         },
         series: [
             {
-                data: [120, 200, 150, 80, 70, 110, 130, 70, 110, 130],
+                data: [-0.057947624, -0.046702016, -0.0690655, -0.056718096, -0.06018256, -0.033153873, -0.05978229, -0.06837557, -0.056482412, -0.04761937, -0.029055256, -0.018770296, -0.016992686],
                 type: 'bar'
             }
         ],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow',
+            },
+            formatter: '{b}: {c}',
+        },
         title: {
             text: 'GPP每年的数值',
             left: 'center',
             textStyle: {
-                color: '#333', // 标题颜色
+                color: '#fff', // 标题颜色
                 fontSize: 18, // 标题字体大小
                 fontWeight: 'bold', // 标题字体粗细
-                fontFamily: 'Arial' ,// 标题字体类型
+                fontFamily: 'Arial',// 标题字体类型
             }
         }
 
@@ -45,7 +55,13 @@ onMounted(() => {
 
 <style scoped>
 #lefttop {
+    --color: #0c1727;
+    background: var(--color);
+    color: var(--color);
+    display: flex;
+    width: 100%;
     height: 100%;
-    background-color: aquamarine
+    overflow: visible;
+    border-radius: .7rem;
 }
 </style>
