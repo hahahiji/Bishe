@@ -16,9 +16,10 @@
     </div>
     <div class="animation-container">
       <div class="boxbar" id="boxbar">
-        <div class="box" v-for="(box, index) in timedata" :key="index" :ref="`box${index + 1}`" @click="console.log(box)">
-        <span style="display: block; height: 100%; width: 100px;">{{ box }}</span>
-      </div>
+        <div class="box" v-for="(box, index) in timedata" :key="index" :ref="`box${index + 1}`"
+          @click="bindcolor(index)">
+          <span style="display: block; height: 100%; width: 100px;">{{ box }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -28,48 +29,55 @@
 import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap'
 import { Draggable } from "gsap/Draggable";
-gsap.registerPlugin(Draggable) 
-const tl = gsap.timeline();
+gsap.registerPlugin(Draggable)
+const tl = gsap.timeline().addLabel('sync');
 const timedata = ref(['1982', '1985', '1988', '1991', '1994', '1997', '2000', '2003', '2006', '2009', '2012', '2015', '2018'])
 onMounted(() => {
-  Draggable.create("#boxbar",{
-  type: "x",
-  dragClickables:true
-});
+  Draggable.create("#boxbar", {
+    type: "x",
+    // dragClickables:true
+  });
 })
-
+const bindcolor = (index) => {
+  const boxes = gsap.utils.toArray('.box');
+  for (let i = 0; i < boxes.length; i++) {
+    boxes[i].style.color = "white"
+  }
+  boxes[index].style.color = "#ae00ff"
+}
 const start = () => {
   const boxes = gsap.utils.toArray('.box');
-  let colors = ['greenyellow', 'gray', 'red', 'blue', 'green', 'orange', 'pink', 'purple', 'brown', 'gray', 'black'];
-  let currentColorIndex = 0;
-  tl.to('.boxbar', {
-    keyframes: [
-      { x: -100, duration: 1.5, stagger: 0.1 ,ease: "power1.out",},
-      { x: -200, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -300, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -400, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -500, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -600, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -700, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -800, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -900, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -1000, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -1100, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-      { x: -1200, duration: 1.5, stagger: 0.1 ,ease: "power1.out",} ,
-    ],
-    onUpdate: () => {
-      const progress = tl.progress(); // 获取当前动画进度
-      console.log('1',progress)
-      console.log((currentColorIndex + 1) / colors.length);
-      if (progress > (currentColorIndex + 1) / colors.length) {
-        currentColorIndex = Math.min(currentColorIndex + 1, colors.length - 1);
-        gsap.set(boxes[currentColorIndex], { color: colors[currentColorIndex] },`+=${currentColorIndex*1.5}`); // 更新 .box 的颜色
+  tl.to(boxes[0], { color: "#ae00ff" },)
+    .to('.boxbar', { x: -100, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[1], { color: "#ae00ff" },)
+    .to('.boxbar', { x: -200, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[2], { color: "#ae00ff" },)
+    .to('.boxbar', { x: -300, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[3], { color: "#ae00ff" },)
+    .to('.boxbar', { x: -400, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[4], { color: "#ae00ff" },)
+    .to('.boxbar', { x: -500, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[5], { color: "#ae00ff" })
+    .to('.boxbar', { x: -600, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[6], { color: "#ae00ff" })
+    .to('.boxbar', { x: -700, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[7], { color: "#ae00ff" })
+    .to('.boxbar', { x: -800, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[8], { color: "#ae00ff" })
+    .to('.boxbar', { x: -900, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[9], { color: "#ae00ff" })
+    .to('.boxbar', { x: -1000, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[10], { color: "#ae00ff" })
+    .to('.boxbar', { x: -1100, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[11], { color: "#ae00ff" })
+    .to('.boxbar', { x: -1200, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[12], {
+      color: "#ae00ff", onComplete: () => {
+        for (let i = 0; i < boxes.length - 1; i++) {
+          boxes[i].style.color = "white"
+        }
       }
-    },
-  });
-  // for (let i = 0; i < colors.length; i++){
-  //   tl.to('.box',{color: colors[i],duration:0},`+=${i*1.5}`)
-  // }
+    })
 }
 
 const end = () => {
@@ -83,7 +91,7 @@ const end = () => {
   height: 60px;
   line-height: 50px;
   text-align: center;
-  // color: white;
+  color: white;
   font-weight: bold;
   font-size: 20px;
   // margin-left: 20px;
@@ -100,6 +108,7 @@ const end = () => {
   align-items: center;
   overflow: hidden;
 }
+
 .boxbar {
   width: 100%;
   position: relative;
@@ -107,6 +116,7 @@ const end = () => {
   flex-flow: row;
   align-items: center;
 }
+
 .banner {
   width: 100%;
   height: 100%;
