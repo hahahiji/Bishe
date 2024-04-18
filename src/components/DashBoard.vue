@@ -17,6 +17,7 @@
         <div class="panel">
           <LeftBottomSlot>
             <LeftBottom v-if="currentRoute === 'gpp'"/>
+            <speileftbottom v-if="currentRoute === 'spei'" />
           </LeftBottomSlot>
         </div>
       </div>
@@ -28,7 +29,7 @@
               <div class="bar bar--2"></div>
               <div class="bar bar--3"></div>
             </label>
-            <div style="color: white; font-weight: bold; margin-left: 5px;">Gpp</div>
+            <div style="color: white; font-weight: bold; margin-left: 5px;">{{title}}</div>
             <div class="input" v-if="menu">
               <button class="value" @click="jumppage('gpp')">
                 植被初级生产力变化
@@ -50,11 +51,11 @@
               </button>
             </div>
           </div>
-          <div class="map">
-            <!-- <div class="bg uwu"></div>
+          <!-- <div class="map">
+            <div class="bg uwu"></div>
             <div class="bg"></div>
-            <MapView /> -->
-          </div>
+            <MapView />
+          </div> -->
         </div>
         <div class="timebar"><timeline/></div>
       </div>
@@ -62,6 +63,7 @@
         <div class="panel">
           <RightTopSlot>
             <RightTop v-if="currentRoute === 'gpp'" />
+            <speirighttop v-if="currentRoute === 'spei'" />
           </RightTopSlot>
         </div>
         <div class="panel">
@@ -84,12 +86,15 @@ import LeftBottomSlot from './slots/LeftBottomSolt.vue';
 import RightBottomSlot from './slots/RightBottomSolt.vue';
 import RightTopSlot from './slots/RightTopSolt.vue';
 import speilefttop from './views/spei/lefttop.vue';
+import speileftbottom from './views/spei/leftbottom.vue';
+import speirighttop from './views/spei/righttop.vue';
 import timeline from './timeline/timeline.vue';
 // import banner from './banner/timeBanner.vue';
 import { nextTick, ref } from 'vue';
 import { useRouter ,useRoute} from 'vue-router';
 const router = useRouter();
 const route = useRoute();
+const title = ref('植被初级生产力变化');
 const menu = ref(false);
 const currentRoute = ref('gpp');
 const changescreen = () => {
@@ -107,9 +112,21 @@ const showmenu = () => {
 
 const jumppage = (value) => {
   menu.value = false;
+  if (value === 'gpp') {
+    title.value = '植被初级生产力变化';
+  } else if (value === 'spei') {
+    title.value = '干湿程度变化';
+  } else if (value === 'xiangguan') {
+    title.value = '植被生产力对干湿变化的响应关系';
+  } else if (value === 'tezheng') {
+    title.value = '植被生产力对干湿变化的响应程度变化特征';
+  }else if (value === 'shijian') {
+    title.value = '植被生产力对干湿变化响应时间';
+  }else if (value === 'yingxiang') {
+    title.value = '水分亏缺和水分过剩对植被生产力的影响';
+  }
   router.push({ name: value });
   currentRoute.value = value;
-  console.log(route);  
   nextTick(() => {
        const iconMenu = document.querySelector('.icon-menu');
        iconMenu.style.setProperty('--pos-y-bar-one', '0');

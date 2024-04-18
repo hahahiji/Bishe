@@ -1,5 +1,5 @@
 <template>
-    <div ref="mapView" id="mapView"></div>
+    <!-- <div ref="mapView" id="mapView"></div> -->
     <div class="legend custom-theme" ref="legendContainer"></div>
 </template>
 

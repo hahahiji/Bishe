@@ -9,10 +9,24 @@ import { onMounted } from 'vue';
 onMounted(() => {
     var myChart = echarts.init(document.getElementById('leftbottom'));
     myChart.setOption({
+        lineStyle: {
+            color: new echarts.graphic.LinearGradient(
+                0, 0, 0, 1, // 渐变的方向，从上到下
+                [
+                    { offset: 0, color: '#1FA2FF' }, // 开始颜色，红色
+                    { offset: 1, color: '#A6FFCB' }  // 结束颜色，蓝色
+                ]
+            ),
+            width: 3,          // 线条宽度
+            type: 'solid'
+        },
         xAxis: {
             type: 'category',
             splitLine: {
                 show: false // 去除X轴网格线
+            },
+            axisLabel: {
+                color: 'white' // 刻度标签的文字颜色
             },
             data: ['1982', '1985', '1988', '1991', '1994', '1997', '2000', '2003', '2006', '2009', '2012', '2015', '2018']
         },
@@ -22,7 +36,8 @@ onMounted(() => {
             },
             type: 'value',
             axisLabel: {
-                formatter: '{value}°C'
+                formatter: '{value}°C',
+                color: 'white' // 刻度标签的文字颜色
             }
         },
         series: [
@@ -40,7 +55,9 @@ onMounted(() => {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'shadow',
+                label: {
+                    show: true,
+                }
             },
             formatter: '{b}: {c}',
         },
