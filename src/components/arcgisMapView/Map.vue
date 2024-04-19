@@ -1,6 +1,8 @@
 <template>
     <!-- <div ref="mapView" id="mapView"></div> -->
-    <div class="legend custom-theme" ref="legendContainer"></div>
+    <div class="legend">
+        <slot></slot>
+    </div>
 </template>
 
 <script setup>
@@ -36,23 +38,6 @@ onMounted(async () => {
     });
     map.add(layer)
     view.ui.components = [];
-    const legendContainer = ref(null);
-    const legendVM = new LegendViewModel({
-        view: view,
-    });
-    const legendWidget = new Legend({
-        view: view,
-        viewModel: legendVM,
-        layerInfos: [
-            {
-                layer: layer,
-                title: null,
-            }
-        ],
-    });
-    nextTick(() => {
-        legendWidget.container = document.querySelector(".legend");
-    });
 })
 </script>
 
@@ -66,36 +51,8 @@ onMounted(async () => {
     position: absolute;
     height: 170px;
     width: 150px;
-    // background-color: red;
     top: 61%;
     left: 1%;
     z-index: 999;
-
-    // .esri-legend__service {
-    //     h3 {
-    //         display: none;
-    //     }
-    // }
-    .esri-legend__layer-body {
-        color: #fff;
-        /* 设置文字颜色为深灰色 */
-        font-size: 16px;
-        /* 设置字体大小为16像素 */
-    }
-
-    .esri-legend__layer-caption {
-        display: none;
-    }
-
-    .esri-legend__list {
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .esri-legend__service-label {
-        font-weight: bold;
-        color: #333;
-    }
 }
 </style>

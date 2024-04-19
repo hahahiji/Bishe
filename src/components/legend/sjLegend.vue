@@ -1,11 +1,16 @@
 <template>
     <div class="comlegend">
        <div class="legend-color">
-        <div class="gradient-linear"></div>
+        <div class="shape" id="one"></div>
+        <div class="shape" id="two"></div>
+        <div class="shape" id="three"></div>
+        <div class="shape" id="four"></div>
        </div>
        <div class="legend-content">
         <div class="context">1</div>
         <div class="context">2</div>
+        <div class="context">3</div>
+        <div class="context">4</div>
        </div>
     </div>
 </template>
@@ -29,6 +34,7 @@
   height: 100%;
   display: flex;
   flex-flow: column;
+  justify-content: space-around;
   align-items: center;
 }
 .legend-content{
@@ -36,18 +42,27 @@
   height: 100%;
   display: flex;
   flex-flow: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   .context{
-    margin-left: 4px;
-    width: 80%;
-    height: 22%;
+    width: 100%;
     color: whitesmoke;
   }
 }
-.gradient-linear{
-    width: 80%;
-    height: 90%;
-    background: linear-gradient(to bottom, #7474bf, #348ac7);
+#one{
+    background-color: aqua;
+}
+#two{
+    background-color: aqua;
+}
+#three{
+    background-color: aqua;
+}
+#four{
+    background-color: aqua;
+}
+.shape{
+    width: 20px;
+    height: 20px;
 }
 </style>

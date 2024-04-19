@@ -10,13 +10,13 @@
       <div class="colunm">
         <div class="panel">
           <LeftTopSolt>
-            <LeftTop v-if="currentRoute ===  'gpp'" />
-            <speilefttop v-if="currentRoute ===  'spei'"/>
+            <LeftTop v-if="currentRoute === 'gpp'" />
+            <speilefttop v-if="currentRoute === 'spei'" />
           </LeftTopSolt>
         </div>
         <div class="panel">
           <LeftBottomSlot>
-            <LeftBottom v-if="currentRoute === 'gpp'"/>
+            <LeftBottom v-if="currentRoute === 'gpp'" />
             <speileftbottom v-if="currentRoute === 'spei'" />
           </LeftBottomSlot>
         </div>
@@ -29,7 +29,7 @@
               <div class="bar bar--2"></div>
               <div class="bar bar--3"></div>
             </label>
-            <div style="color: white; font-weight: bold; margin-left: 5px;">{{title}}</div>
+            <div style="color: white; font-weight: bold; margin-left: 5px;">{{ title }}</div>
             <div class="input" v-if="menu">
               <button class="value" @click="jumppage('gpp')">
                 植被初级生产力变化
@@ -51,13 +51,19 @@
               </button>
             </div>
           </div>
-          <!-- <div class="map">
+          <div class="map">
             <div class="bg uwu"></div>
             <div class="bg"></div>
-            <MapView />
-          </div> -->
+            <MapView>
+              <gppLegend v-if="currentRoute === 'gpp'" />
+              <speiLegend v-if="currentRoute === 'spei'" />
+              <xgLegend v-if="currentRoute === 'xiangguan'" />
+            </MapView>
+          </div>
         </div>
-        <div class="timebar"><timeline/></div>
+        <div class="timebar">
+          <timeline />
+        </div>
       </div>
       <div class="colunm">
         <div class="panel">
@@ -89,9 +95,12 @@ import speilefttop from './views/spei/lefttop.vue';
 import speileftbottom from './views/spei/leftbottom.vue';
 import speirighttop from './views/spei/righttop.vue';
 import timeline from './timeline/timeline.vue';
+import gppLegend from './legend/gppLegend.vue';
+import speiLegend from './legend/speiLegend.vue';
+import xgLegend from './legend/xgLegend.vue';
 // import banner from './banner/timeBanner.vue';
 import { nextTick, ref } from 'vue';
-import { useRouter ,useRoute} from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 const title = ref('植被初级生产力变化');
@@ -120,21 +129,22 @@ const jumppage = (value) => {
     title.value = '植被生产力对干湿变化的响应关系';
   } else if (value === 'tezheng') {
     title.value = '植被生产力对干湿变化的响应程度变化特征';
-  }else if (value === 'shijian') {
+  } else if (value === 'shijian') {
     title.value = '植被生产力对干湿变化响应时间';
-  }else if (value === 'yingxiang') {
+  } else if (value === 'yingxiang') {
     title.value = '水分亏缺和水分过剩对植被生产力的影响';
   }
   router.push({ name: value });
+
   currentRoute.value = value;
   nextTick(() => {
-       const iconMenu = document.querySelector('.icon-menu');
-       iconMenu.style.setProperty('--pos-y-bar-one', '0');
-       iconMenu.style.setProperty('--pos-y-bar-three', '0');
-       iconMenu.style.setProperty('--scale-bar', '1');
-       iconMenu.style.setProperty('--rotate-bar-one', '0');
-       iconMenu.style.setProperty('--rotate-bar-three', '0');
-     });
+    const iconMenu = document.querySelector('.icon-menu');
+    iconMenu.style.setProperty('--pos-y-bar-one', '0');
+    iconMenu.style.setProperty('--pos-y-bar-three', '0');
+    iconMenu.style.setProperty('--scale-bar', '1');
+    iconMenu.style.setProperty('--rotate-bar-one', '0');
+    iconMenu.style.setProperty('--rotate-bar-three', '0');
+  });
 }
 </script>
 
@@ -423,6 +433,15 @@ $var3: #ff6356;
   text-align: center;
   border-radius: 5px;
   transition: all 0.3s;
+}
+
+.legend {
+  position: absolute;
+  height: 170px;
+  width: 150px;
+  top: 61%;
+  left: 1%;
+  z-index: 999;
 }
 
 @keyframes speeen {
