@@ -62,7 +62,9 @@
           </div>
         </div>
         <div class="timebar">
-          <timeline />
+          <Suspense>
+            <timeline />
+          </Suspense>
         </div>
       </div>
       <div class="colunm">
@@ -306,7 +308,7 @@ $var3: #ff6356;
     .map {
       margin-top: 40px;
       height: 90%;
-      width: 610px;
+      width: 99%;
       position: relative;
       border-radius: 14px;
 

@@ -28,7 +28,7 @@
 .right-top::before {
   content: '';
   position: absolute;
-  width: 131%;
+  width: 137%;
   background-image: linear-gradient(180deg, rgb(0, 183, 255), rgb(255, 48, 255));
   height: 60%;
   animation: rotBGimg 3s linear infinite;

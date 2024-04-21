@@ -26,10 +26,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,watchEffect  } from 'vue'
 import { gsap } from 'gsap'
 import { Draggable } from "gsap/Draggable";
+import { toRaw } from "@vue/reactivity";
+import bus from 'vue3-eventbus'
 gsap.registerPlugin(Draggable)
+let map = ref(null)
+let layers = ref([])
+bus.on('pushlayerandmap',(e) =>{
+    layers.value = e.layer
+    map.value = e.map 
+})
 const tl = gsap.timeline().addLabel('sync');
 const timedata = ref(['1982', '1985', '1988', '1991', '1994', '1997', '2000', '2003', '2006', '2009', '2012', '2015', '2018'])
 onMounted(() => {
@@ -38,46 +46,84 @@ onMounted(() => {
     // dragClickables:true
   });
 })
+
 const bindcolor = (index) => {
+  const maplayers = toRaw(layers.value)
+  const mainmaps = toRaw(map.value)
   const boxes = gsap.utils.toArray('.box');
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].style.color = "white"
   }
   boxes[index].style.color = "#ae00ff"
+  mainmaps.add(maplayers[index])
 }
 const start = () => {
   const boxes = gsap.utils.toArray('.box');
-  tl.to(boxes[0], { color: "#ae00ff" },)
+  const maplayer = toRaw(layers.value)
+  const mainmap = toRaw(map.value)
+  tl.to(boxes[0], {
+    color: "#ae00ff", onComplete: () => {
+      mainmap.add(maplayer[0])
+    }
+  },)
     .to('.boxbar', { x: -100, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[1], { color: "#ae00ff" },)
-    .to('.boxbar', { x: -200, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[2], { color: "#ae00ff" },)
-    .to('.boxbar', { x: -300, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[3], { color: "#ae00ff" },)
-    .to('.boxbar', { x: -400, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[4], { color: "#ae00ff" },)
-    .to('.boxbar', { x: -500, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[5], { color: "#ae00ff" })
-    .to('.boxbar', { x: -600, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[6], { color: "#ae00ff" })
-    .to('.boxbar', { x: -700, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[7], { color: "#ae00ff" })
-    .to('.boxbar', { x: -800, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[8], { color: "#ae00ff" })
-    .to('.boxbar', { x: -900, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[9], { color: "#ae00ff" })
-    .to('.boxbar', { x: -1000, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[10], { color: "#ae00ff" })
-    .to('.boxbar', { x: -1100, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[11], { color: "#ae00ff" })
-    .to('.boxbar', { x: -1200, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
-    .to(boxes[12], {
+    .to(boxes[1], {
       color: "#ae00ff", onComplete: () => {
-        for (let i = 0; i < boxes.length - 1; i++) {
-          boxes[i].style.color = "white"
-        }
+        mainmap.add(maplayer[1])
       }
-    })
+    },)
+    .to('.boxbar', { x: -200, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+    .to(boxes[2], {
+      color: "#ae00ff", onComplete: () => {
+        mainmap.add(maplayer[2])
+      }
+    },)
+    .to('.boxbar', { x: -300, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[3], { color: "#ae00ff", onComplete: () => {
+        mainmap.add(maplayer[3])
+      } },)
+  .to('.boxbar', { x: -400, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[4], { color: "#ae00ff", onComplete: () => {
+        mainmap.add(maplayer[4])
+      } },)
+  .to('.boxbar', { x: -500, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[5], { color: "#ae00ff", onComplete: () => {
+        mainmap.add(maplayer[5])
+      }})
+  .to('.boxbar', { x: -600, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[6], { color: "#ae00ff", onComplete: () => {
+        mainmap.add(maplayer[6])
+      } })
+  .to('.boxbar', { x: -700, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[7], { color: "#ae00ff" , onComplete: () => {
+        mainmap.add(maplayer[7])
+      }})
+  .to('.boxbar', { x: -800, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[8], { color: "#ae00ff" , onComplete: () => {
+        mainmap.add(maplayer[8])
+      }})
+  .to('.boxbar', { x: -900, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[9], { color: "#ae00ff" , onComplete: () => {
+        mainmap.add(maplayer[9])
+      }})
+  .to('.boxbar', { x: -1000, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[10], { color: "#ae00ff" , onComplete: () => {
+        mainmap.add(maplayer[10])
+      }})
+  .to('.boxbar', { x: -1100, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[11], { color: "#ae00ff" , onComplete: () => {
+        mainmap.add(maplayer[11])
+      }})
+  .to('.boxbar', { x: -1200, duration: 1.5, stagger: 0.1, ease: "power1.out", }, '-=0.1')
+  .to(boxes[12], {
+    color: "#ae00ff", onComplete: () => {
+      mainmap.add(maplayer[12]);
+      for (let i = 0; i < boxes.length - 1; i++) {
+        boxes[i].style.color = "white"
+      }
+      // mainmap.removeAll()
+    }
+  })
 }
 
 const end = () => {

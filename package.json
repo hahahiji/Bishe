@@ -15,9 +15,10 @@
     "esri-loader": "^3.7.0",
     "gsap": "^3.12.5",
     "normalize.css": "^8.0.1",
-    "pinia": "^2.1.7",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue3-eventbus": "^2.0.0",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

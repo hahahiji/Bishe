@@ -3,11 +3,12 @@ import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import eventBus from 'vue3-eventbus'
 import 'normalize.css'
-import { createPinia } from 'pinia'
+import store from './store'
 const app = createApp(App)
-const pinia = createPinia()
 app.use(ElementPlus)
+app.use(eventBus)
 app.use(router)
-app.use(pinia)
+app.use(store)
 app.mount('#app')
