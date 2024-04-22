@@ -13,10 +13,24 @@
         <span></span>
         <span></span> 结束
       </button>
+      <button @click="change" v-if="currentRoute === 'spei'">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span> 切换
+      </button>
     </div>
     <div class="animation-container">
       <div class="boxbar" id="boxbar">
-        <div class="box" v-for="(box, index) in timedata" :key="index" :ref="`box${index + 1}`"
+        <div class="box" v-if="currentRoute === 'gpp'"  v-for="(box, index) in timedata" :key="index" :ref="`box${index + 1}`"
+          @click="bindcolor(index)">
+          <span style="display: block; height: 100%; width: 100px;">{{ box }}</span>
+        </div>
+        <div class="box" v-if="currentRoute === 'spei' && !show"  v-for="(box, index) in speiyeardata" :key="index" :ref="`box${index + 1}`"
+          @click="bindcolor(index)">
+          <span style="display: block; height: 100%; width: 100px;">{{ box }}</span>
+        </div>
+        <div class="box" v-if="currentRoute === 'spei' && show"  v-for="(box, index) in speiaccumlativedata" :key="index" :ref="`box${index + 1}`"
           @click="bindcolor(index)">
           <span style="display: block; height: 100%; width: 100px;">{{ box }}</span>
         </div>
@@ -26,27 +40,46 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted,watchEffect  } from 'vue'
+import { ref, onMounted, onUnmounted} from 'vue'
 import { gsap } from 'gsap'
 import { Draggable } from "gsap/Draggable";
 import { toRaw } from "@vue/reactivity";
 import bus from 'vue3-eventbus'
+const currentRoute = ref("gpp")
 gsap.registerPlugin(Draggable)
 let map = ref(null)
 let layers = ref([])
+let speiyearlayers = ref([])
+let speiaccumlate = ref([])
+let show = ref(false)
 bus.on('pushlayerandmap',(e) =>{
     layers.value = e.layer
     map.value = e.map 
+    speiyearlayers.value = e.speiyearlayer
+    speiaccumlate.value = e.accumlatelayer
+})
+bus.on('changeRoute',(e) =>{
+  currentRoute.value = e.currentRoute
 })
 const tl = gsap.timeline().addLabel('sync');
 const timedata = ref(['1982', '1985', '1988', '1991', '1994', '1997', '2000', '2003', '2006', '2009', '2012', '2015', '2018'])
+const speiyeardata = ref(['1982', '1985', '1988', '1991', '1994', '1997', '2000', '2003', '2006', '2009', '2012', '2015', '2018'])
+const speiaccumlativedata = ref(['spei1', 'spei2', 'spei3', 'spei4', 'spei5', 'spei6', 'spei7', 'spei8', 'spei9', 'spei10', 'spei11', 'spei12', 'spei13','spei14','spei15','spei16','spei17','spei18','spei19','spei20','spei21','spei22','spei23','spei24'])
 onMounted(() => {
   Draggable.create("#boxbar", {
     type: "x",
     // dragClickables:true
   });
 })
-
+const handleEvent = (payload) => {
+      // 处理事件逻辑
+      console.log('事件触发，接收到的 payload:', payload);
+    };
+onUnmounted(() => {
+      // 组件卸载时，移除事件监听
+      bus.off('changeRoute', handleEvent);
+      bus.off('pushlayerandmap', handleEvent);
+});
 const bindcolor = (index) => {
   const maplayers = toRaw(layers.value)
   const mainmaps = toRaw(map.value)
@@ -59,8 +92,16 @@ const bindcolor = (index) => {
 }
 const start = () => {
   const boxes = gsap.utils.toArray('.box');
-  const maplayer = toRaw(layers.value)
-  const mainmap = toRaw(map.value)
+  const maplayer = [];
+  const mainmap = toRaw(map.value);
+  if(currentRoute.value == 'gpp'){
+    maplayer = toRaw(layers.value)
+  }else if(currentRoute.value == 'spei' && !show.value){
+    maplayer = toRaw(speiyearlayers.value)
+  }else{
+    maplayer = toRaw(speiaccumlate.value)
+  }
+  
   tl.to(boxes[0], {
     color: "#ae00ff", onComplete: () => {
       mainmap.add(maplayer[0])
@@ -129,6 +170,9 @@ const start = () => {
 const end = () => {
   tl.pause()
 }
+const change = () => {
+  show.value = !show.value
+}  
 </script>
 
 <style lang="scss" scoped>

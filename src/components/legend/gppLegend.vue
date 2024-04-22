@@ -48,6 +48,6 @@
 .gradient-linear{
     width: 80%;
     height: 90%;
-    background: linear-gradient(to bottom, #7474bf, #348ac7);
+    background: linear-gradient(to top, red, orange, yellow,  rgb(161,255,169), rgb(85,255,227), rgb(59,154,255), blue,);
 }
 </style>

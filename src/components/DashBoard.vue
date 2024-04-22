@@ -3,7 +3,6 @@
     <div class="top">
       <el-header class="sys-header">
         <div class="header-inner">中国植被生产力对干湿变化的响应可视化系统</div>
-        <div class="change-showinner" @click="changescreen">切换展示模式</div>
       </el-header>
     </div>
     <div class="container">
@@ -12,12 +11,20 @@
           <LeftTopSolt>
             <LeftTop v-if="currentRoute === 'gpp'" />
             <speilefttop v-if="currentRoute === 'spei'" />
+            <xiangguanleft v-if="currentRoute === 'xiangguan'" />
+            <tzleft v-if="currentRoute === 'tezheng'" />
+            <sjleft v-if="currentRoute === 'shijian'" />
+            <yxleft v-if="currentRoute === 'yingxiang'" />
           </LeftTopSolt>
         </div>
         <div class="panel">
           <LeftBottomSlot>
             <LeftBottom v-if="currentRoute === 'gpp'" />
             <speileftbottom v-if="currentRoute === 'spei'" />
+            <xiangguanbottom v-if="currentRoute === 'xiangguan'" />
+            <tzbottom v-if="currentRoute === 'tezheng'" />
+            <sjbottom v-if="currentRoute === 'shijian'" />
+            <yxbottom v-if="currentRoute === 'yingxiang'" />
           </LeftBottomSlot>
         </div>
       </div>
@@ -58,25 +65,39 @@
               <gppLegend v-if="currentRoute === 'gpp'" />
               <speiLegend v-if="currentRoute === 'spei'" />
               <xgLegend v-if="currentRoute === 'xiangguan'" />
+              <tzLegend v-if="currentRoute === 'tezheng'" />
+              <sjLegend v-if="currentRoute === 'shijian'" />
+              <yxLegend v-if="currentRoute === 'yingxiang'" />
             </MapView>
           </div>
         </div>
-        <div class="timebar">
-          <Suspense>
-            <timeline />
-          </Suspense>
-        </div>
+          <div class="timebar">
+            <timeline v-if="currentRoute === 'spei' || currentRoute === 'gpp'" :leixing="currentRoute" />
+            <middombtom v-if="currentRoute === 'xiangguan'" />
+            <tzmiddombtom v-if="currentRoute === 'tezheng'" />
+            <sjmiddombtom v-if="currentRoute === 'shijian'" />
+            <yxmiddombtom v-if="currentRoute === 'yingxiang'" />
+          </div>
       </div>
       <div class="colunm">
         <div class="panel">
           <RightTopSlot>
             <RightTop v-if="currentRoute === 'gpp'" />
             <speirighttop v-if="currentRoute === 'spei'" />
+            <xgrtop v-if="currentRoute === 'xiangguan'" />
+            <tzrtop v-if="currentRoute === 'tezheng'" />
+            <sjrtop v-if="currentRoute === 'shijian'" />
+            <yxrtop v-if="currentRoute === 'yingxiang'" />
           </RightTopSlot>
         </div>
         <div class="panel">
           <RightBottomSlot>
-            <!-- <RightTop /> -->
+            <RightBottom v-if="currentRoute === 'gpp'" />
+            <speirightbottom v-if="currentRoute === 'spei'" />
+            <xgrbottom v-if="currentRoute === 'xiangguan'" />
+            <tzrbottom v-if="currentRoute === 'tezheng'" />
+            <sjrbottom v-if="currentRoute === 'shijian'" />
+            <yxrbottom v-if="currentRoute === 'yingxiang'" />
           </RightBottomSlot>
         </div>
       </div>
@@ -85,22 +106,54 @@
 </template>
 
 <script setup lang="ts">
-import LeftTop from './chartsView/LeftTop.vue';
-import LeftBottom from './chartsView/LeftBottom.vue';
-import RightTop from './chartsView/RightTop.vue';
+import bus from 'vue3-eventbus'
 import MapView from './arcgisMapView/Map.vue';
 import LeftTopSolt from './slots/LeftTopSolt.vue';
 import LeftBottomSlot from './slots/LeftBottomSolt.vue';
 import RightBottomSlot from './slots/RightBottomSolt.vue';
 import RightTopSlot from './slots/RightTopSolt.vue';
-import speilefttop from './views/spei/lefttop.vue';
-import speileftbottom from './views/spei/leftbottom.vue';
-import speirighttop from './views/spei/righttop.vue';
-import timeline from './timeline/timeline.vue';
+
 import gppLegend from './legend/gppLegend.vue';
 import speiLegend from './legend/speiLegend.vue';
 import xgLegend from './legend/xgLegend.vue';
-// import banner from './banner/timeBanner.vue';
+import tzLegend from './legend/tzLegend.vue';
+import sjLegend from './legend/sjLegend.vue';
+import yxLegend from './legend/yxLegend.vue';
+
+import LeftTop from './chartsView/LeftTop.vue';
+import LeftBottom from './chartsView/LeftBottom.vue';
+import RightTop from './chartsView/RightTop.vue';
+import RightBottom from './chartsView/RightBottom.vue';
+
+import speilefttop from './views/spei/lefttop.vue';
+import speileftbottom from './views/spei/leftbottom.vue';
+import speirighttop from './views/spei/righttop.vue';
+import speirightbottom from './views/spei/rightbottom.vue';
+
+import xiangguanleft from './views/xiangguan/lefttop.vue';
+import xiangguanbottom from './views/xiangguan/leftbottom.vue';
+import xgrtop from './views/xiangguan/righttop.vue';
+import xgrbottom from './views/xiangguan/rightbottom.vue';
+import middombtom from './views/xiangguan/middombottom.vue';
+
+import tzleft from './views/tezheng/lefttop.vue';
+import tzbottom from './views/tezheng/leftbottom.vue';
+import tzrtop from './views/tezheng/righttop.vue';
+import tzrbottom from './views/tezheng/rightbottom.vue';
+import tzmiddombtom from './views/tezheng/middombottom.vue';
+
+import yxleft from './views/yingxiang/lefttop.vue';
+import yxbottom from './views/yingxiang/leftbottom.vue';
+import yxrtop from './views/yingxiang/righttop.vue';
+import yxrbottom from './views/yingxiang/rightbottom.vue';
+import yxmiddombtom from './views/yingxiang/middombottom.vue';
+
+import sjleft from './views/shijian/lefttop.vue';
+import sjbottom from './views/shijian/leftbottom.vue';
+import sjrtop from './views/shijian/righttop.vue';
+import sjrbottom from './views/shijian/rightbottom.vue';
+import sjmiddombtom from './views/shijian/middombottom.vue';
+import timeline from './timeline/timeline.vue';
 import { nextTick, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
@@ -108,9 +161,6 @@ const route = useRoute();
 const title = ref('植被初级生产力变化');
 const menu = ref(false);
 const currentRoute = ref('gpp');
-const changescreen = () => {
-  console.log(1);
-}
 const showmenu = () => {
   menu.value = !menu.value;
   const iconMenu = document.querySelector('.icon-menu');
@@ -139,6 +189,7 @@ const jumppage = (value) => {
   router.push({ name: value });
 
   currentRoute.value = value;
+  bus.emit('changeRoute', { currentRoute: value });
   nextTick(() => {
     const iconMenu = document.querySelector('.icon-menu');
     iconMenu.style.setProperty('--pos-y-bar-one', '0');
