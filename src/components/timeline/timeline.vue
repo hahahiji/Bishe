@@ -53,10 +53,13 @@ let speiyearlayers = ref([])
 let speiaccumlate = ref([])
 let show = ref(false)
 bus.on('pushlayerandmap',(e) =>{
+    console.log('ccc',e);
+    
     layers.value = e.layer
     map.value = e.map 
     speiyearlayers.value = e.speiyearlayer
     speiaccumlate.value = e.accumlatelayer
+    console.log('mmm',map.value);
 })
 bus.on('changeRoute',(e) =>{
   currentRoute.value = e.currentRoute
@@ -92,11 +95,16 @@ const bindcolor = (index) => {
 }
 const start = () => {
   const boxes = gsap.utils.toArray('.box');
-  const maplayer = [];
-  const mainmap = toRaw(map.value);
+  let maplayer = [];
+  let mainmap = toRaw(map.value);
+  console.log(map.value);
+  
+  console.log('地图',mainmap);
+  
   if(currentRoute.value == 'gpp'){
     maplayer = toRaw(layers.value)
   }else if(currentRoute.value == 'spei' && !show.value){
+    console.log('1111',speiyearlayers.value)
     maplayer = toRaw(speiyearlayers.value)
   }else{
     maplayer = toRaw(speiaccumlate.value)

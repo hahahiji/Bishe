@@ -69,24 +69,24 @@ onMounted(async () => {
     bus.on('changeRoute', (e) => {
         if(e.currentRoute === 'xiangguan'){
             const layer = new MapImageLayer({
-            url: 'http://localhost:6080/arcgis/rest/services/SPEI累计轮播文件//MapServer', //相关性
+            url: 'http://localhost:6080/arcgis/rest/services/xiangguanxing/GPP与SPEI3相关显著性/MapServer', //相关性
              });
             map.add(layer)
         }else if(e.currentRoute === 'tezheng'){
             const layer = new MapImageLayer({
-            url: 'http://localhost:6080/arcgis/rest/services/SPEI累计轮播文件//MapServer', // 
+            url: 'http://localhost:6080/arcgis/rest/services/xiangguanxing/GPP与SPEI3变化显著性/MapServer', // 
              });
             map.add(layer)
         }
         else if(e.currentRoute === 'shijian'){
             const layer = new MapImageLayer({
-            url: 'http://localhost:6080/arcgis/rest/services/SPEI累计轮播文件//MapServer', // 
+            url: 'http://localhost:6080/arcgis/rest/services/xiangguanxing/植被生产力对干湿变化的响应时间/MapServer', // 
              });
             map.add(layer)
         }
         else if(e.currentRoute === 'yingxiang'){
             const layer = new MapImageLayer({
-            url: 'http://localhost:6080/arcgis/rest/services/SPEI累计轮播文件//MapServer', // 
+            url: 'http://localhost:6080/arcgis/rest/services/xiangguanxing/植被别对水分亏缺剩显著响应的最小时间尺度/MapServer', // 
              });
             map.add(layer)
         }

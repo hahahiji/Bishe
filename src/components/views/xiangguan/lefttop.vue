@@ -39,7 +39,7 @@ onMounted(() => {
             nameTextStyle: {
                 color: '#fff',
                 fontSize: 10,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
             },
             splitLine: {
                 show: false // 去除X轴网格线
@@ -87,7 +87,7 @@ onMounted(() => {
         legend: {
             data: ['显著正相关', '显著负相关', '相关系数'],
             show: true,
-            top: "10%",
+            top: "15%",
             textStyle: {
                 color: 'white'
             },
@@ -97,7 +97,7 @@ onMounted(() => {
             left: 'center',
             textStyle: {
                 color: '#fff', // 标题颜色
-                fontSize: 18, // 标题字体大小
+                fontSize: 16, // 标题字体大小
                 fontWeight: 'bold', // 标题字体粗细
                 fontFamily: 'Arial',// 标题字体类型
             }
